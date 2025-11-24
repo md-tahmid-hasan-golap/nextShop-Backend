@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -38,12 +38,59 @@ async function run() {
         
        // all collaction
          const productCollaction = client.db("product-DB").collection("products");
+         const importCollaction = client.db("product-DB").collection("imports");
 
 
         //  post api
         app.post("/products", async(req, res) => {
           const newProduct = req.body;
           const result = await productCollaction.insertOne(newProduct);
+          res.send(result)
+        })
+
+
+
+        //  post api
+
+        app.post("/imports", async(req, res) => {
+          const newImport = req.body;
+          const result = await importCollaction.insertOne(newImport);
+          res.send(result)
+        })
+
+
+
+
+         app.get('/myImports', async(req, res) => {
+            const result = await importCollaction.find().toArray()
+            res.send(result)
+         })
+
+        //  get api
+        app.get("/products", async(req, res) => {
+          const result = await productCollaction.find().limit(6).toArray()
+          res.send(result)
+        })
+        //  get api
+        app.get("/allProducts", async(req, res) => {
+          const result = await productCollaction.find().toArray()
+          res.send(result)
+        })
+
+        //  get api
+        app.get("/productsDetails/:id", async(req, res) => {
+          const id = req.params.id;
+          const queary = {_id: new ObjectId(id)}
+          const result = await productCollaction.findOne(queary)
+          res.send(result)
+        })
+
+       
+        //  get api
+        app.delete("/deleteImportProduct/:id", async(req, res) => {
+          const id = req.params.id;
+          const queary = {_id: new ObjectId(id)}
+          const result = await importCollaction.deleteOne(queary)
           res.send(result)
         })
 
