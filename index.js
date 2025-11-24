@@ -66,6 +66,13 @@ async function run() {
             res.send(result)
          })
 
+         app.get('/myProducts/:email', async(req, res) => {
+          const email = req.params.email;
+          const queary = {email}
+          const result = await productCollaction.find(queary).toArray()
+          res.send(result)
+         })
+
         //  get api
         app.get("/products", async(req, res) => {
           const result = await productCollaction.find().limit(6).toArray()
@@ -90,7 +97,7 @@ async function run() {
         app.delete("/deleteImportProduct/:id", async(req, res) => {
           const id = req.params.id;
           const queary = {_id: new ObjectId(id)}
-          const result = await importCollaction.deleteOne(queary)
+          const result = await productCollaction.deleteOne(queary)
           res.send(result)
         })
 
