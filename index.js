@@ -102,21 +102,21 @@ async function run() {
         })
 
 
-      // PUT route: update in imports collection
-// // app.put("/updateImportProduct/:id", async (req, res) => {
-// //   const id = req.params.id;
-// //   const newImport = req.body;
-// //   const filter = { _id: new ObjectId(id) };
-// //   const updateDoc = { $set: newImport };
+      
+app.put("/updateImportProduct/:id", async (req, res) => {
+  const id = req.params.id;
+  const newImport = req.body;
+  const filter = { _id: new ObjectId(id) };
+  const updateDoc = { $set: newImport };
 
-// //   try {
-// //     const result = await productCollaction.updateOne(filter, updateDoc);
-// //     res.send(result);
-// //   } catch (err) {
-// //     console.error(err);
-// //     res.status(500).send({ message: "Failed to update import." });
-// //   }
-// });
+  try {
+    const result = await productCollaction.updateOne(filter, updateDoc);
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to update import." });
+  }
+});
 
 
 
