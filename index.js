@@ -37,7 +37,15 @@ async function run() {
 
         
        // all collaction
+         const productCollaction = client.db("product-DB").collection("products");
 
+
+        //  post api
+        app.post("/products", async(req, res) => {
+          const newProduct = req.body;
+          const result = await productCollaction.insertOne(newProduct);
+          res.send(result)
+        })
 
 
 
