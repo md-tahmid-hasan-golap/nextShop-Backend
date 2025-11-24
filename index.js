@@ -97,6 +97,13 @@ async function run() {
         app.delete("/deleteImportProduct/:id", async(req, res) => {
           const id = req.params.id;
           const queary = {_id: new ObjectId(id)}
+          const result = await importCollaction.deleteOne(queary)
+          res.send(result)
+        })
+        //  get api
+        app.delete("/deleteMyProduct/:id", async(req, res) => {
+          const id = req.params.id;
+          const queary = {_id: new ObjectId(id)}
           const result = await productCollaction.deleteOne(queary)
           res.send(result)
         })
